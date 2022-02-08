@@ -39,7 +39,7 @@ This section will cover how I obtained the heart disease dataset, prepared and c
 First, I had to get a fairly large dataset with a real-world use, that I could train various algorithms on. I was recommended a great website called ‘Kaggle’, which has a massive online community of machine-learning enthusiasts, and an enormous collection of free-to-use datasets. After a long period of searching, I stumbled upon the ‘Heart Failure Prediction Dataset’, which had over 450 code examples and a few discussions. Once I ensured that this was a viable option, I downloaded the dataset as a ‘.csv’ file, and uploaded it to my workspace on ‘Replit’. This site is a browser-based IDE that allows users to run python projects in a console or shell terminal. I also created a new python file for the project.
 
 <p align="center">
-  <img alt="Files Screenshot" src="images/files.png">
+  <img width="350" alt="Files Screenshot" src="images/files.png">
 </p>
 
 #### <div id="Analysis">Analysis and pre-processing</div>
