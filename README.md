@@ -154,7 +154,7 @@ Just Like the first set of tests, I ran each classifier 5 times and recorded the
 
 ![Accuracy Scores](images/chart5.png)  |  ![Precision Scores](images/chart6.png)
 :-------------------------:|:-------------------------:
-![Accuracy Scores](images/chart7.png)  |  ![Precision Scores](images/chart8.png)
+![Accuracy Mean](images/chart7.png)  |  ![Precision Mean](images/chart8.png)
 
 ***Note:*** *There are 2 voting classifiers, (one being hard voting, the other being soft). This is because hard voting ensemble models classify data instances based on the majority vote of all models involved, i.e., the mode prediction. On the other hand, soft voting models classify data based on the weights (importance) of each model involved. These weights are assigned according to the probability of all predictions made [10].*
 
@@ -166,5 +166,37 @@ The last set of tests that I performed on each model had the sole purpose of gau
 :-------------------------:|:-------------------------:
 
 These final results were quite surprising, due to the fact that 4 of the 6 models had a mean accuracy score of 0.86 in the first test, and the StackingClassifier and MLPClassifier’s accuracy scores did not change at all. Moreover, the hard and soft VotingClassifiers behaved very differently to before. This is because the soft voting model’s mean accuracies were consistently higher than the hard voting model’s, despite following the same trend. Also, the hard voting’s mean accuracy and precision scores move in opposite directions, however this could be a coincidence/anomaly.
+
+### Evaluation and results
+Since each model determines whether a patient has heart disease or not based on them having specific characteristics of the data, this is a binary classification problem. Thus, the correct performance metrics to use are ‘accuracy_score’ and ‘precision_score’. As previously stated, accuracy is the fraction of correctly classified predictions from a given model, whereas precision quantifies the amount of correct positive predictions made, using the following forumla, where **tp** represents the number of **true positives**, and **fp** represents the number of **false positives**.
+
+<p align="center">
+  <img alt="Precision Equation" src="https://latex.codecogs.com/gif.latex?%5Cbg_white%20%5Cfrac%7Btp%7D%7Btp&plus;fp%7D">
+</p>
+
+Conclusively, I can confidently say that some of the predictions that I made were correct, and others were incorrect. For example, researching and utilizing the GradientBoostingClassifier proved to be a very good decision. This is because (just as predicted) the algorithm outperformed RandomForest. This can be seen in the ensemble model accuracy and precision graphs. If inspected closely, it can be seen that in the first test, both models have an equal accuracy score of 0.88, and an equal precision score of 0.85. RandomForest’s accuracy then dips to 0.86 in the second test, and 0.84 in the third. GBC’s accuracy also dips to 0.86 in test 2, and remains at 0.86 in test 3. As for RandomForest’s precision score, this stagnates at 0.85 for the first four tests. However, something interesting happens in the fourth test. GBC’s scores dive, in a way where the scores become 0.85 for both model’s accuracy and precision. On the fifth and final test, both models increase in accuracy and precision, however GBC’s increase is larger. What we can derive from this is that GradientBoostingClassifier outperforms RandomForest with a 1.2% higher mean accuracy, and 1.4% higher mean precision, although it does not consistently outperform RandomForest, but rather ‘bounces off of it’.
+
+On the contrary, some things did not go according to plan. For example, editing the hyperparameters of RandomForest and MLPClassifier seemed to slightly worsen their performance as opposed to improving it. This can be seen when comparing the first set of tests with default parameters to the second set of tests with custom parameters.  In retrospect, I also should have tested GradientBoostingClassifier with default parameters to begin with, as I am unsure as to whether increasing ‘n_estimators’ increased or decreased its performance. 
+
+Finally, performing 5-fold cross validation on the shortlisted models three times and calculating the mean result gave me a clearer perception of each model’s true performance. I was surprised to see that the soft VotingClassifier dominated accuracy, and that MLP still had a lower accuracy and performance, despite removing the tweaked hyperparameters. Overall, I have measured that the system is successful by performing various types of tests on each classification model, recording results, and determining the best model to use based on the results. In this case, considering all factors, I would say that the preferred model to use would be StackingClassifier, simply because it attained the highest mean accuracy and precision of all models. It is also worth noting that in the third and final cross validation test, the fourth and fifth fold gave precision scores of 0.91 and 0.93. This means that if system was fine-tuned correctly, the StackingClassifier could achieve precision and possibly accuracy scores of over 90%.
+
+<p align="center">
+  <img width="700" alt="StackingClassifier Best Split" src="images/output4.png">
+</p>
+
+### References
+1. Pin on Future of Artificial Intelligence [WWW Document], n.d. URL https://www.pinterest.co.uk/pin/794111346782106915/ (accessed 1.17.22) – **Title page cover image**.
+2. Predicting Heart Failure with KNN 90% Accuracy [WWW Document], n.d. URL https://kaggle.com/victordonjuan/predicting-heart-failure-with-knn-90-accuracy (accessed 1.17.22) – **Facts about my specific dataset**.
+3. What Is Pandas in Python? Everything You Need to Know, n.d. . ActiveState. URL https://www.activestate.com/resources/quick-reads/what-is-pandas-in-python-everything-you-need-to-know/ (accessed 1.19.22) – **Python ‘pandas’ definition**.
+4. Lahera, G., 2019. Unbalanced Datasets & What To Do. Strands Tech Corner. URL https://medium.com/strands-tech-corner/unbalanced-datasets-what-to-do-144e0552d9cd (accessed 1.19.22) – **Why unbalanced datasets can be problematic**.
+5. sklearn.svm.SVC [WWW Document], n.d. . scikit-learn. URL https://scikit-learn/stable/modules/generated/sklearn.svm.SVC.html (accessed 1.19.22) – **SVC information**.
+6. Brownlee, J., 2018. How to Make Predictions with scikit-learn. Machine Learning Mastery. URL https://machinelearningmastery.com/make-predictions-scikit-learn/ (accessed 1.19.22) – ```predict()``` **method function/definition**.
+7. Accuracy, Precision, Recall & F1 Score: Interpretation of Performance Measures [WWW Document], 2016. . Exsilio Blog. URL https://blog.exsilio.com/all/accuracy-precision-recall-f1-score-interpretation-of-performance-measures/ (accessed 1.19.22) – **Accuracy and precision definitions**.
+8. Gradient boosting. Wikipedia URL https://en.wikipedia.org/wiki/Gradient_boosting (accessed 1.19.22) - **Gradient Boosting research**.
+
+9. sklearn.ensemble.GradientBoostingClassifier [WWW Document], n.d. . scikit-learn. URL https://scikit-learn/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html (accessed 1.21.22) - ```n_estimators``` **definition**.
+ 	10. Kumar, A., 2020. Hard vs Soft Voting Classifier Python Example. Data Analytics. URL https://vitalflux.com/hard-vs-soft-voting-classifier-python-example/ (accessed 1.21.22) – **Hard and Soft voting definitions**.
+11. sklearn.metrics.precision_score [WWW Document], n.d. . scikit-learn. URL https://scikit-learn/stable/modules/generated/sklearn.metrics.precision_score.html (accessed 1.18.22) - **Precision equation**.
+
 
 
